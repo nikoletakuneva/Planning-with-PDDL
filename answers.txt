@@ -1,0 +1,81 @@
+-----------------------------------------------------------------------
+ ------ Informatics 2D - 2017/18 - Second Assignment - Planning ------
+-----------------------------------------------------------------------
+ 
+ Write your matriculation number here (your name is not needed)
+ Matriculation Number: s1643102_______
+ 
+1.1 
+loc(x), adjacent(loc1, loc2)
+
+1.2
+at(x, location), agent(x), glass(x), customer(x)
+1.3
+empty(g), at(g, location), holding(a, g)
+
+1.4
+served(c), at(c, location)
+
+1.5
+Initial state: loc(UF) and loc(MF) and loc(LF) and loc(UB) and loc(MB) and loc(LB) and loc(BAR) 
+    and adjacent(UF, BAR) and adjacent(UF, UB) and adjacent(UF, MF) and adjacent(UB, MB) and adjacent(MB, LB) and adjacent(LB, LF) and adjacent(MF, LF)
+	and agent(A) and at(A, BAR)
+	and glass(G) and at(G, BAR)
+	and customer(C) and at(C, LB)
+
+1.6
+Action(PickUp(A, G, L),
+Precond: agent(A) and glass(G) and at(A, L) and at(G, L) and not exists (?g - glass) (holding(A, g)) and empty(G),
+Effect: holding(A, G))
+
+1.7
+Action(HandOver(A, G, C, L),
+Precond: glass(G) and customer(C) and agent(A) and loc(L) and at(A, L) and at(C, L) and not empty(G), holding(A, G), not served(C)
+Effect: served(C) and not holding(A, G)
+
+1.8
+Action(Pour(A, G),
+Precond: agent(A) and glass(G) and holding(A, G) and empty(G) and at(A, BAR)
+Effect: not empty(G))
+
+1.9
+Action(Move(A, from, to),
+Precond: agent(A) and loc(from) and loc(to) and at(A, from) and (adjacent(from, to))
+Effect: at(A, to) and not at(A, from))
+
+1.10
+Initial State: agent(A) and at(A, BAR) and glass(G) and at(G, BAR) and empty(G) and customer(C) and at(C, UF) and not served(C)
+Goal State: served(C) and at(A, UF)
+
+Current state description: served(C) and at(A, UF)
+
+Relevant Actions: HandOver(A, G, C, L)
+
+Choose: HandOver(A, G, C, L)
+
+Current state description: glass(G) and customer(C) and agent(A) and at(C, UF) and at(A, UF) and not empty(G)
+
+Relevant Actions: Move(A, UF, BAR), Move(A, UF, UB), Move(A, UF, MF), Pour(A, G)
+
+Choose: Move(A, UF, BAR)
+
+Current state description: glass(G) and customer(C) and agent(A) and at(C, UF) and not empty(G) and at(A, BAR)
+
+Relevant Actions: Pour(A, G), Move(A, BAR, UF)
+
+Choose: Pour(A, G)
+
+Current state description: glass(G) and customer(C) and agent(A) and at(C, UF) and at(A, BAR) and holding(A, G) and empty(G)
+
+Relevant Actions: PickUp(A, G), Move(A, BAR, UF)
+
+Choose: PickUp(A, G, BAR)
+
+Current state description: glass(G) and customer(C) and agent(A) and at(C, UF) and at(A, BAR) and at(G, BAR) and empty(G)
+
+We have reached the initial state.
+The actions that lead from the initial state to the goal state are: PickUp, Pour, Move, HandOver in that order.
+
+--------------------
+Answers to parts 2 and 3 should be included in the appropriate
+*-template.pddl files.
